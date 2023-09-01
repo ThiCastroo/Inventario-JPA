@@ -142,7 +142,7 @@ Nos próximos dias, a correção da prova será disponibilizada no github do pro
 Para acessar digite no prompt:
 
 ```shell
-git clone https://github.com/Benefrancis/inventario && cd inventario && git checkout correcao
+git clone https://github.com/Benefrancis/inventario && cd inventario && git checkout correcao/2tdspt
 ```
 
 
