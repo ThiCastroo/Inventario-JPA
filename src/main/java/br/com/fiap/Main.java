@@ -1,8 +1,15 @@
 package br.com.fiap;
 
+import br.com.fiap.domain.entity.Bem;
+import br.com.fiap.domain.entity.Departamento;
+import br.com.fiap.domain.entity.Inventario;
+import br.com.fiap.domain.entity.TipoDeBem;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+
+import javax.swing.*;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,9 +18,51 @@ public class Main {
         EntityManager manager = factory.createEntityManager();
 
 
+        // persistir( manager );
+
+        //  findInventarioById( manager );
+
+        manager.createQuery( "From Bem" ).getResultList().forEach( System.out::println );
 
         manager.close();
         factory.close();
 
+    }
+
+    private static void findInventarioById(EntityManager manager) {
+        Long idInventario = Long.valueOf( JOptionPane.showInputDialog( "ID do Inventário" ) );
+        Inventario inventario = manager.find( Inventario.class, idInventario );
+        System.out.println( inventario );
+    }
+
+    private static void persistir(EntityManager manager) {
+        TipoDeBem tipo = new TipoDeBem();
+        tipo.setNome( "AUTOMOVEIS" );
+
+        Departamento departamento = new Departamento();
+        departamento.setNome( "SEGURANCA" );
+
+        Inventario inventario = new Inventario();
+        inventario.setInicio( LocalDate.now() )
+                .setDepartamento( departamento );
+
+        Bem veiculo1 = new Bem();
+        veiculo1.setNome( "Cadilac Lyric" )
+                .setTipo( tipo )
+                .setLocalizacao( departamento )
+                .setEtiqueta( "2132132" )
+                .setAquisicao( LocalDate.now().minusYears( 1 ) );
+
+
+        manager.getTransaction().begin();
+
+        manager.persist( veiculo1 );
+        manager.persist( inventario );
+
+        manager.getTransaction().commit();
+
+
+        System.out.println( veiculo1 );
+        System.out.println( inventario );
     }
 }
