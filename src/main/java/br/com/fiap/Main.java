@@ -15,10 +15,10 @@ public class Main {
     public static void main(String[] args) {
 
         //Aqui a gente mata a cobra e mostra a Cobra morta!!!!!
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory( "maria-db" );
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory( "oracle" );
         EntityManager manager = factory.createEntityManager();
 
-        // persistDados( manager );
+         persistDados( manager );
 
         // findInventarioById( manager );
 
