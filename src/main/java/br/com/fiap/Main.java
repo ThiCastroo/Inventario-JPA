@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
 
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory( "maria-db" );
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("oracle");
         EntityManager manager = factory.createEntityManager();
 
 
@@ -22,7 +22,7 @@ public class Main {
 
         //  findInventarioById( manager );
 
-        manager.createQuery( "From Bem" ).getResultList().forEach( System.out::println );
+        // manager.createQuery( "From Bem" ).getResultList().forEach( System.out::println );
 
         manager.close();
         factory.close();
@@ -30,39 +30,39 @@ public class Main {
     }
 
     private static void findInventarioById(EntityManager manager) {
-        Long idInventario = Long.valueOf( JOptionPane.showInputDialog( "ID do Inventário" ) );
-        Inventario inventario = manager.find( Inventario.class, idInventario );
-        System.out.println( inventario );
+        Long idInventario = Long.valueOf(JOptionPane.showInputDialog("ID do Inventário"));
+        Inventario inventario = manager.find(Inventario.class, idInventario);
+        System.out.println(inventario);
     }
 
     private static void persistir(EntityManager manager) {
         TipoDeBem tipo = new TipoDeBem();
-        tipo.setNome( "AUTOMOVEIS" );
+        tipo.setNome("AUTOMOVEIS");
 
         Departamento departamento = new Departamento();
-        departamento.setNome( "SEGURANCA" );
+        departamento.setNome("SEGURANCA");
 
         Inventario inventario = new Inventario();
-        inventario.setInicio( LocalDate.now() )
-                .setDepartamento( departamento );
+        inventario.setInicio(LocalDate.now())
+                .setDepartamento(departamento);
 
         Bem veiculo1 = new Bem();
-        veiculo1.setNome( "Cadilac Lyric" )
-                .setTipo( tipo )
-                .setLocalizacao( departamento )
-                .setEtiqueta( "2132132" )
-                .setAquisicao( LocalDate.now().minusYears( 1 ) );
+        veiculo1.setNome("Cadilac Lyric")
+                .setTipo(tipo)
+                .setLocalizacao(departamento)
+                .setEtiqueta("2132132")
+                .setAquisicao(LocalDate.now().minusYears(1));
 
 
         manager.getTransaction().begin();
 
-        manager.persist( veiculo1 );
-        manager.persist( inventario );
+        manager.persist(veiculo1);
+        manager.persist(inventario);
 
         manager.getTransaction().commit();
 
 
-        System.out.println( veiculo1 );
-        System.out.println( inventario );
+        System.out.println(veiculo1);
+        System.out.println(inventario);
     }
 }

@@ -16,6 +16,9 @@ public class Bem {
     @Column(name = "ID_BEM")
     private Long id;
 
+    @Column(name = "NR_ETIQUETA", nullable = false, unique = true)
+    private String etiqueta;
+
     @Column(name = "NM_BEM", nullable = false)
     private String nome;
 
@@ -29,8 +32,7 @@ public class Bem {
     )
     private TipoDeBem tipo;
 
-    @Column(name = "NR_ETIQUETA", nullable = false)
-    private String etiqueta;
+
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(
