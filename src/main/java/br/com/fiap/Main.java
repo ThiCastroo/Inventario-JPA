@@ -10,6 +10,7 @@ import jakarta.persistence.Persistence;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,9 +19,21 @@ public class Main {
         EntityManager manager = factory.createEntityManager();
 
 
-        // persistir( manager );
+        // persistir(manager);
 
-        //  findInventarioById( manager );
+        Inventario inventario = findInventarioById(manager);
+
+        List<Bem> bens = findAllBens(manager);
+
+
+        for (Bem b : bens) {
+            inventario.addBem(b);
+        }
+
+
+        manager.getTransaction().begin();
+        manager.persist(inventario);
+        manager.getTransaction().commit();
 
         // manager.createQuery( "From Bem" ).getResultList().forEach( System.out::println );
 
@@ -29,10 +42,19 @@ public class Main {
 
     }
 
-    private static void findInventarioById(EntityManager manager) {
+
+    private static List<Bem> findAllBens(EntityManager manager) {
+        String jpql = "FROM Bem";
+        return manager.createQuery(jpql).getResultList();
+
+    }
+
+
+    private static Inventario findInventarioById(EntityManager manager) {
         Long idInventario = Long.valueOf(JOptionPane.showInputDialog("ID do Inventário"));
         Inventario inventario = manager.find(Inventario.class, idInventario);
         System.out.println(inventario);
+        return inventario;
     }
 
     private static void persistir(EntityManager manager) {

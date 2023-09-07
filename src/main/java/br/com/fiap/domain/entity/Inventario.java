@@ -60,7 +60,7 @@ public class Inventario {
     @Column(name = "DT_FIM")
     private LocalDate fim;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(
             name = "DEPARTAMENTO",
             referencedColumnName = "ID_DEPARTAMENTO",
